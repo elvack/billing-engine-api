@@ -24,7 +24,35 @@ paths:
           $ref: '#/components/responses/healthCheck'
         500:
           $ref: '#/components/responses/500'
+  /admin/sign-in:
+    post:
+      tags:
+        - Admin
+      summary: Sign in
+      requestBody:
+        $ref: "#/components/requestBodies/adminSignIn"
+      responses:
+        200:
+          $ref: "#/components/responses/adminSignIn"
+        400:
+          $ref: "#/components/responses/400"
+        500:
+          $ref: "#/components/responses/500"
 components:
+  requestBodies:
+    adminSignIn:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              email:
+                type: string
+                default: ""
+              password:
+                type: string
+                default: ""
+                minLength: 8
   responses:
     200:
       description: OK
@@ -40,6 +68,20 @@ components:
               message:
                 type: string
                 default: ok
+    400:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: string
+                nullable: true
+                default: null
+              message:
+                type: string
+                default: bad request
     500:
       description: Internal Server Error
       content:
@@ -54,6 +96,22 @@ components:
               message:
                 type: string
                 default: internal server error
+    adminSignIn:
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    default: ""
+              message:
+                type: string
+                default: signed in successfully
     healthCheck:
       description: OK
       content:

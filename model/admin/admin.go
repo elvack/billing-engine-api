@@ -2,6 +2,8 @@ package admin
 
 import (
 	"time"
+
+	"github.com/golang-jwt/jwt/v5"
 )
 
 type (
@@ -12,5 +14,10 @@ type (
 		Id                uint32
 		Token             string
 		UpdatedAt         time.Time
+	}
+
+	AuthClaims struct {
+		AdminId uint32
+		*jwt.RegisteredClaims
 	}
 )

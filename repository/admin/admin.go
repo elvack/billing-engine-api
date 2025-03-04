@@ -9,6 +9,7 @@ type (
 	IRepo interface {
 		Create(admin *adminModel.Admin) (err error)
 		Take(selectParams []string, conditions *adminModel.Admin) (admin adminModel.Admin, err error)
+		Update(id *uint32, values *map[string]any) (err error)
 	}
 
 	repo struct {

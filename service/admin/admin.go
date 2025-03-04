@@ -8,6 +8,7 @@ import (
 type (
 	IService interface {
 		Seed(req *adminModel.SeedReq) (err error)
+		SignIn(reqBody *adminModel.SignInReqBody) (resData adminModel.SignInResData, statusCode int, err error)
 	}
 
 	service struct {
