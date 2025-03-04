@@ -19,6 +19,7 @@ func Run(db database.DB) (err error) {
 	adminGroup := router.Group("admin")
 	{
 		adminGroup.POST("sign-in", adminController.SignIn)
+		adminGroup.DELETE("sign-out", authorize(db.GormDb), adminController.SignOut)
 	}
 	router.GET("health", healthController.Check)
 	router.Static("public", "./public")

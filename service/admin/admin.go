@@ -7,8 +7,10 @@ import (
 
 type (
 	IService interface {
+		Authorize(token *string) (adminId uint32, statusCode int, err error)
 		Seed(req *adminModel.SeedReq) (err error)
 		SignIn(reqBody *adminModel.SignInReqBody) (resData adminModel.SignInResData, statusCode int, err error)
+		SignOut(adminId uint32) (err error)
 	}
 
 	service struct {

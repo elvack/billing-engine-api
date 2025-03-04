@@ -18,7 +18,7 @@ paths:
     get:
       tags:
         - Default
-      summary: Health Check
+      summary: Check
       responses:
         200:
           $ref: '#/components/responses/healthCheck'
@@ -38,7 +38,25 @@ paths:
           $ref: "#/components/responses/400"
         500:
           $ref: "#/components/responses/500"
+  /admin/sign-out:
+    delete:
+      tags:
+        - Admin
+      summary: Sign out
+      security:
+        - authorize: []
+      responses:
+        200:
+          $ref: "#/components/responses/200"
+        401:
+          $ref: "#/components/responses/401"
+        500:
+          $ref: "#/components/responses/500"
 components:
+  securitySchemes:
+    authorize:
+      type: http
+      scheme: bearer
   requestBodies:
     adminSignIn:
       content:
@@ -82,6 +100,20 @@ components:
               message:
                 type: string
                 default: bad request
+    401:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: string
+                nullable: true
+                default: null
+              message:
+                type: string
+                default: unauthorized
     500:
       description: Internal Server Error
       content:
