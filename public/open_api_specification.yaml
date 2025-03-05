@@ -70,6 +70,24 @@ paths:
           $ref: "#/components/responses/401"
         500:
           $ref: "#/components/responses/500"
+  /loan:
+    post:
+      tags:
+        - Loan
+      summary: Create
+      security:
+        - authorize: []
+      requestBody:
+        $ref: "#/components/requestBodies/loanCreate"
+      responses:
+        200:
+          $ref: "#/components/responses/loanCreate"
+        400:
+          $ref: "#/components/responses/400"
+        401:
+          $ref: "#/components/responses/401"
+        500:
+          $ref: "#/components/responses/500"
 components:
   securitySchemes:
     authorize:
@@ -102,6 +120,14 @@ components:
                 type: string
                 default: ""
                 minLength: 10
+    loanCreate:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              customer_id:
+                type: integer
   responses:
     200:
       description: OK
@@ -203,3 +229,17 @@ components:
               message:
                 type: string
                 default: checked successfully
+    loanCreate:
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: string
+                nullable: true
+                default: null
+              message:
+                type: string
+                default: created successfully
