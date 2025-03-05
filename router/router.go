@@ -2,6 +2,7 @@ package router
 
 import (
 	"github.com/elvack/billing-engine-api/controller/admin"
+	"github.com/elvack/billing-engine-api/controller/customer"
 	"github.com/elvack/billing-engine-api/controller/health"
 	"github.com/elvack/billing-engine-api/controller/root"
 	"github.com/elvack/billing-engine-api/database"
@@ -11,6 +12,7 @@ import (
 
 func Run(db database.DB) (err error) {
 	adminController := admin.NewController(db.GormDb)
+	customerController := customer.NewController(db.GormDb)
 	healthController := health.NewController(db.SqlDb)
 	rootController := root.NewController()
 	router := gin.Default()
@@ -21,6 +23,7 @@ func Run(db database.DB) (err error) {
 		adminGroup.POST("sign-in", adminController.SignIn)
 		adminGroup.DELETE("sign-out", authorize(db.GormDb), adminController.SignOut)
 	}
+	router.POST("customer", authorize(db.GormDb), customerController.Create)
 	router.GET("health", healthController.Check)
 	router.Static("public", "./public")
 	return router.Run()
