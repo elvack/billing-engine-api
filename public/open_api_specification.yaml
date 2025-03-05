@@ -52,6 +52,24 @@ paths:
           $ref: "#/components/responses/401"
         500:
           $ref: "#/components/responses/500"
+  /customer:
+    post:
+      tags:
+        - Customer
+      summary: Create
+      security:
+        - authorize: []
+      requestBody:
+        $ref: "#/components/requestBodies/customerCreate"
+      responses:
+        200:
+          $ref: "#/components/responses/customerCreate"
+        400:
+          $ref: "#/components/responses/400"
+        401:
+          $ref: "#/components/responses/401"
+        500:
+          $ref: "#/components/responses/500"
 components:
   securitySchemes:
     authorize:
@@ -71,6 +89,19 @@ components:
                 type: string
                 default: ""
                 minLength: 8
+    customerCreate:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                default: ""
+              phone_number:
+                type: string
+                default: ""
+                minLength: 10
   responses:
     200:
       description: OK
@@ -144,6 +175,20 @@ components:
               message:
                 type: string
                 default: signed in successfully
+    customerCreate:
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: string
+                nullable: true
+                default: null
+              message:
+                type: string
+                default: created successfully
     healthCheck:
       description: OK
       content:
